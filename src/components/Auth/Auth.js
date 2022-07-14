@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Typography, Avatar, Paper, Grid, Container } from '@mui/material'
-// import { GoogleLogin } from 'react-google-login'
-// import { gapi } from 'gapi-script'
 import jwt_decode from 'jwt-decode'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import useStyles from './styles'
 import Input from './Input'
-// import Icon from './icon'
 
 export default function Auth() {
   const [showPassword, setShowPassword] = useState(false)
@@ -19,9 +17,6 @@ export default function Auth() {
   const navigate = useNavigate()
 
   const handleCallbackResponse = async (response) => {
-    // console.log('Encoded JWT ID token: ' + response.credential)
-    // const userObject = jwt_decode(response.credential)
-    // console.log(userObject)
     const token = await response?.credential
     const result = jwt_decode(token)
     console.log(result)
@@ -29,7 +24,6 @@ export default function Auth() {
     try {
         dispatch({ type: 'AUTH', data: { result, token }})
     
-        navigate('/')
     } catch (error) {
         console.log(error)
     }
@@ -61,16 +55,18 @@ export default function Auth() {
 
   const switchMode = () => {
     setIsSignup(prev => !prev)
-    handleShowPassword(false)
+    setShowPassword(false)
   }
 
-//   const googleSuccess = async (response) => {
-//     console.log(response)
-//   }
-//   const googleFailure = (error) => {
-//     console.log(error)
-//     console.log('Error')
-//   }
+  const googleSuccess = async (response) => {
+    const token = await response?.credential
+    const result = jwt_decode(token)
+    console.log(result)
+  }
+  const googleFailure = (error) => {
+    console.log(error)
+    console.log('Error')
+  }
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -84,7 +80,7 @@ export default function Auth() {
                     { isSignup && (
                         <>
                             <Input name='firstName' label='First Name' handleChange={handleChange} autofocus half />
-                            <Input name='firstName' label='First Name' handleChange={handleChange} half />  
+                            <Input name='lasttName' label='Last Name' handleChange={handleChange} half />  
                         </>
                     )}
                     <Input name='email' label='Email Address' handleChange={handleChange} type='email' />     
@@ -94,7 +90,8 @@ export default function Auth() {
                 <Button type='submit' fullWidth variant='contained' color='primary' sx={{'marginTop': 2}}>
                     { isSignup ? 'Sign Up' : 'Sign In'}
                 </Button>
-                <Button id='signInDiv' fullWidth variant='outlined' color='primary' sx={{'marginTop': 2, 'marginBottom': 2}}></Button>
+                {/* <Button id='signInDiv' fullWidth variant='outlined' color='primary' sx={{'marginTop': 2, 'marginBottom': 2}}></Button> */}
+                {/* <GoogleLogin /> */}
 
                 <Grid container justifyContent='flex-end'>
                     <Grid item>
