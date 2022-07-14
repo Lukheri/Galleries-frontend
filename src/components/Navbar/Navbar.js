@@ -30,7 +30,7 @@ export default function Navbar() {
     const token = user ?.token
 
     setUser(JSON.parse(localStorage.getItem('profile')))
-  }, [location, user?.token])
+  }, [location, user?.token,])
 
   const googleSuccess = async (response) => {
     const token = await response?.credential
@@ -62,7 +62,7 @@ export default function Navbar() {
                   padding: '10px 50px',
               }} position="static" color="inherit">
           <div className={classes.brandContainer}>
-              <Typography component={Link} to='/' className={classes.heading} variant="h2" align="center">Budget Facebook</Typography>
+              <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">Budget Facebook</Typography>
               <img className={classes.image} src={fb} alt="memories" height="60" />
           </div>
           <Toolbar className={classes.toolbar}>
