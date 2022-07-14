@@ -1,26 +1,45 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Container } from '@mui/material'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
-import { gapi } from 'gapi-script'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline'
 
-import Navbar from './components/Navbar/Navbar'
-import Home from './components/Home/Home'
-import Auth from './components/Auth/Auth'
+import Gallery from './components/Gallery/Gallery'
 
 export default function App() {
+  // const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  // const colorMode = React.useMemo(
+  //   () => ({
+  //     // The dark mode switch would invoke this method
+  //     toggleColorMode: () => {
+  //       setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+  //     },
+  //   }),
+  //   [],
+  // );
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
+  const lightTheme = createTheme({
+    palette: {
+      mode: 'light',
+    },
+  });
 
   return (
     <BrowserRouter>
-      <Container maxwidth='lg'>
-        <Navbar />
-        <Routes>
-          <Route path='/' exact element={<Home />} />
-          {/* <Route path='/auth' exact element={<Auth />} /> */}
-        </Routes>
-      </Container>    
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <Container maxwidth='lg'>
+          <Routes>
+            <Route path='/' exact element={<Gallery />} />
+          </Routes>
+        </Container>         
+      </ThemeProvider>
     </BrowserRouter>
-
-
   )
 }

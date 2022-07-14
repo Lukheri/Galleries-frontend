@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { AppBar, Button, Toolbar, Typography, Avatar } from '@mui/material'
 import { Link, useNavigate, useLocation} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { GoogleLogin } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode'
+import decode from 'jwt-decode'
 
 import useStyles from './styles'
-import fb from '../../images/fb.png'
+import gal from '../../images/gal.png'
 
-export default function Navbar() {
+export default function Navbar({ user, setUser }) {
   const classes = useStyles()
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
   const client_id = '367587044892-3uo6bio0a34ua95jli4g2viu4tu5jfn8.apps.googleusercontent.com'
 
@@ -29,8 +29,13 @@ export default function Navbar() {
   useEffect(() => {
     const token = user ?.token
 
+    if(token){
+      const decodedToken = decode(token)
+      if(decodedToken.exp * 1000 < new Date().getTime()) logout()
+    }
+
     setUser(JSON.parse(localStorage.getItem('profile')))
-  }, [location, user?.token,])
+  }, [location, setUser, user?.token])
 
   const googleSuccess = async (response) => {
     const token = await response?.credential
@@ -62,8 +67,8 @@ export default function Navbar() {
                   padding: '10px 50px',
               }} position="static" color="inherit">
           <div className={classes.brandContainer}>
-              <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">Budget Facebook</Typography>
-              <img className={classes.image} src={fb} alt="memories" height="60" />
+              <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">Galleries</Typography>
+              <img className={classes.image} src={gal} alt="memories" height="60" />
           </div>
           <Toolbar className={classes.toolbar}>
               {user ? (
@@ -75,6 +80,7 @@ export default function Navbar() {
               ) : (
                   <GoogleLogin onSuccess={googleSuccess} onFailure={googleFailure}/>
               )}
+              
           </Toolbar>
       </AppBar>      
     </GoogleOAuthProvider>
