@@ -24,7 +24,6 @@ export default function App() {
     } else if (mode === 'light'){
       setMode('dark')
     }
-    console.log(mode)
   }
 
   return (
