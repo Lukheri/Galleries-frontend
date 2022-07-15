@@ -21,4 +21,10 @@ export default makeStyles({
   buttonSubmit: {
     marginBottom: 1,
   },
+  galleries: {
+    fontWeight: 600,
+    background: '-webkit-linear-gradient(#04fffb, #0284fe)',
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent"
+  }
 });

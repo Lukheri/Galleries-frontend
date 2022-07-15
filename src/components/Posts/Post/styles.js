@@ -22,6 +22,7 @@ export default makeStyles({
     position: 'relative',
   },
   overlay: {
+    fontSize: 10,
     position: 'absolute',
     top: '20px',
     left: '20px',

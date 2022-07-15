@@ -1,46 +1,44 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { Container } from '@mui/material'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
-import { gapi } from 'gapi-script'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline'
+import IconButton from '@mui/material/IconButton'
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-import Navbar from './components/Navbar/Navbar'
-import Home from './components/Home/Home'
-import Auth from './components/Auth/Auth'
+import Gallery from './components/Gallery/Gallery'
 
 export default function App() {
+  const [mode, setMode] = useState('dark')
 
-  // function handleCallbackResponse(response) {
-  //   console.log('Encoded JWT ID token: ' + response.credential)
-  //   const userObject = jwt_decode(response.credential)
-  //   console.log(userObject)
-  // }
-  
-  // useEffect(() => {
-  //   /* global google */
-  //   google.accounts.id.initialize({
-  //     client_id: '367587044892-3uo6bio0a34ua95jli4g2viu4tu5jfn8.apps.googleusercontent.com',
-  //     callback: handleCallbackResponse
-  //   })
+  const darkTheme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
 
-  //   google.accounts.id.renderButton(
-  //     document.getElementById('signInDiv'),
-  //     { theme: 'outline', size: 'large' }
-  //   )
-
-  // }, [])
+  const changeMode = () => {
+    if(mode === 'dark'){
+      setMode('light')
+    } else if (mode === 'light'){
+      setMode('dark')
+    }
+  }
 
   return (
     <BrowserRouter>
-      <Container maxwidth='lg'>
-        <Navbar />
-        {/* <div id='signInDiv'></div> */}
-        <Routes>
-          <Route path='/' exact element={<Home />} />
-          <Route path='/auth' exact element={<Auth />} />
-        </Routes>
-      </Container>    
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <IconButton sx={{ ml: 1 }} onClick={changeMode} color="inherit">
+          {mode === 'dark'? <Brightness7Icon /> : <Brightness4Icon />}
+        </IconButton>
+        <Container maxwidth='lg'>
+          <Routes>
+            <Route path='/' exact element={<Gallery />} />
+          </Routes>
+        </Container>         
+      </ThemeProvider>
     </BrowserRouter>
-
   )
 }

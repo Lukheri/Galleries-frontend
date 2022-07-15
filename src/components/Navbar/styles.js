@@ -14,6 +14,9 @@ export default makeStyles({
     heading: {
       color: '#0284fe',
       textDecoration: 'none',
+      background: '-webkit-linear-gradient(#04fffb, #0284fe)',
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent"
     },
     image: {
       marginLeft: '15px',
