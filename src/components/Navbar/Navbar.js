@@ -13,8 +13,6 @@ import gal from '../../images/gal.png'
 export default function Navbar({ user, setUser }) {
   const classes = useStyles()
 
-  const client_id = '367587044892-3uo6bio0a34ua95jli4g2viu4tu5jfn8.apps.googleusercontent.com'
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
@@ -52,11 +50,10 @@ export default function Navbar({ user, setUser }) {
   
   const googleFailure = (error) => {
     console.log(error)
-    console.log('Error')
   }
-
+  
   return (
-    <GoogleOAuthProvider clientId={client_id} >
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID} >
       <AppBar sx={{
                   borderRadius: 15,
                   margin: '30px 0',
