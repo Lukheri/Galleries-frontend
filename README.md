@@ -5,12 +5,12 @@ Galleries is a simple full-stack social media app created using the MERN stack w
 The backend is deployed on [heroku](https://budgetfacebook.herokuapp.com/) while the frontend is deployed on [netlify](https://galleries-1.netlify.app/)
 
 ## Technologies used
--React js
--Node js
--MongoDB
--Express
--Redux
--Material-UI
+- React js
+- Node js
+- MongoDB
+- Express
+- Redux
+- Material-UI
 
 ## Page
 ![image](https://user-images.githubusercontent.com/88194722/179682369-417a6e1f-038a-486d-b796-89bbc93952bb.png)
